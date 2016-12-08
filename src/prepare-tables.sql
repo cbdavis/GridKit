@@ -173,7 +173,8 @@ insert into power_generator (generator_id, osm_id, osm_type, geometry, location,
 
 insert into power_generator (generator_id, osm_id, osm_type, geometry, location, tags)
      select nextval('generator_id'), id, 'w',
-            case when st_isclosed(wg.line) then st_makepolygon(wg.line)
+            case when st_isclosed(wg.line) and st_numpoints(wg.line) >= 4 
+		 then st_makepolygon(wg.line)
                  else wg.line end,
             st_centroid(wg.line), hstore(w.tags)
        from planet_osm_ways w
