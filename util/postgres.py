@@ -1,4 +1,5 @@
 from which import which
+import io
 try:
     import psycopg2
     import psycopg2.extensions
